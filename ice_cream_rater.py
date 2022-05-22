@@ -3,7 +3,6 @@ import json
 import sqlite3
 import subprocess
 import threading
-import requests
 from joblib import load
 import pandas as pd
 from flask import Flask, render_template, request, redirect, session
@@ -169,6 +168,3 @@ def index():
                             rate=rate, selected_list=selected_list)
 
 
-if __name__=="__main__":
-    from waitress import serve
-    serve(app, host="0.0.0.0", port=8080)
