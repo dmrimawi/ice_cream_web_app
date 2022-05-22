@@ -12,14 +12,13 @@ app = Flask(__name__)
 app.secret_key = 'keep it secret, keep it safe'
 
 
-APP_NAME = "api"
 SCRIPTS_DIR = os.path.abspath(os.path.join('.', 'scripts'))
 CLONE_SCRIPT = os.path.join(SCRIPTS_DIR, 'clone_new_model.sh')
 PUSH_SCRIPT = os.path.join(SCRIPTS_DIR, 'push_last_updates.sh')
 MACHINE_LEARNING_REPO_DIR = os.path.abspath(os.path.join('..', 'machine-learner'))
 CSV_FILE_PATH = os.path.join(MACHINE_LEARNING_REPO_DIR, 'ice_cream_rater_data.csv')
 MODEL_FILE_PATH = os.path.join(MACHINE_LEARNING_REPO_DIR, 'ice_cream_rater_model.joblib')
-DATABASE_PATH = os.path.abspath(os.path.join(APP_NAME, 'ingredients.db'))
+DATABASE_PATH = os.path.abspath(os.path.join(SCRIPTS_DIR, "..", 'ingredients.db'))
 LAMBDA_ML_API = "https://f2968r0sib.execute-api.us-east-1.amazonaws.com/default/ice_cream_lambda"
 FIRST_SELECT_OPTION_VALUE = "--Choose new ingrediant--"
 ACCEPT_RATE_VALUES = [1, 2, 3, 4, 5]
@@ -166,5 +165,4 @@ def index():
         del session['selected']
     return render_template("index.html", ingrediant_list=json.dumps(session['ingrediant_list']), \
                             rate=rate, selected_list=selected_list)
-
 
