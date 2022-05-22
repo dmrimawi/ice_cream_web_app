@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+{% block title %}Ice Cream Rater{% endblock %}
+{% block head %}
+    {{ super() }}
+    <script type="text/javascript">
+        var ingrediant_list = {{ ingrediant_list|safe }};
+        var elementNameCount = 0;
+        function generate_select(ingrediant_list) {
+            var values = ['--Choose new ingrediant--'];
+            values = values.concat(ingrediant_list);
+
+            var select = document.createElement("select");
+            select.name = "ingrediant_" + elementNameCount;
+            select.id = "ingrediant_" + elementNameCount;
+            select.className += "custom-select"
+
+            for (const val of values) {
+                var option = document.createElement("option");
+                option.value = val;
+                option.text = val.charAt(0).toUpperCase() + val.slice(1);
+                select.appendChild(option);
+            }
+
+            var newDiv = document.createElement("div");
+            newDiv.className += "input-group-lg";
+            newDiv.appendChild(select);
+            document.getElementById("container").appendChild(newDiv);
+            elementNameCount = elementNameCount + 1;
+        }
+    </script>
+{% endblock %}
+{% block content %}
+    <div class="row align-items-center">
+        <div class="col-md-6 d-none d-md-block">
+            <img src="{{ url_for('static', filename='assets/imgs/logo.svg') }}" alt="" class="w-100 rounded shadow">
+        </div>
+        <div class="col-md-6">
+            <form method="POST" action="/rate_recipe">
+                <div id="container"></div>
+                <button type="button" class="btn btn-primary btn-block" onclick="generate_select(ingrediant_list)">Add New Ingrediant</button>
+                <br>
+                <div class="input-group-lg">
+                    <input class="input-group" type="number" id="rate_value" name="rate_value" placeholder="Rate">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Rate</button>
+            </form>
+            <div>
+                {% if error_msg is not none %}
+                    <p style="color: red">{{ error_msg }}</p>
+                {%endif%}
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        generate_select(ingrediant_list);
+        generate_select(ingrediant_list);
+        generate_select(ingrediant_list);
+    </script>
+{% endblock %}

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Start your development with Pigga landing page.">
+    <meta name="author" content="Devcrud">
+    <title>{% block title %}{% endblock %}</title>
+    <!-- font icons -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendors/themify-icons/css/themify-icons.css') }}">
+    <!-- Bootstrap + Pigga main styles -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/pigga.css') }}">
+    {% endblock %}
+</head>
+<body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">
+    
+    <!-- First Navigation -->
+    <nav class="navbar nav-first navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="{{ url_for('static', filename='assets/imgs/navbar-brand.svg') }}" alt="Logo image">
+            </a>
+        </div>
+    </nav>
+    <!-- End of First Navigation --> 
+    <!-- Second Navigation -->
+    <nav class="nav-second navbar custom-navbar navbar-expand-sm navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto"> 
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About Us</a>
+                    </li>
+                </ul> 
+            </div>
+        </div>
+    </nav>
+    <!-- End Of Second Navigation --> 
+    <!-- Page Header -->
+    <header class="header">
+        <div class="overlay">
+            <img src="{{ url_for('static', filename='assets/imgs/logo.svg') }}" alt="Logo" class="logo">
+            <h1 class="subtitle">Welcome To Our Ice Cream Rater</h1>
+            <h1 class="title">Rate Your Ice Cream  &amp; Mix </h1> 
+            <a class="btn btn-primary mt-3" href="#rate">Check Your Recipe Rate</a>
+            <a class="btn btn-primary mt-3" href="/rate_some_recipe#rate">Rate Some Recipe</a> 
+        </div>      
+    </header>
+    <!-- End Of Page Header --> 
+    <section id="rate" class="bg-white">
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
+    </section>
+    <!-- Prefooter Section  -->
+    <div class="py-4 border border-lighter border-bottom-0 border-left-0 border-right-0 bg-dark">
+        <div class="container">
+            <div class="row justify-content-between align-items-center text-center">
+                <div class="col-md-3 text-md-left mb-3 mb-md-0">
+                    <img src="{{ url_for('static', filename='assets/imgs/navbar-brand.svg') }}" width="100" alt="Download free bootstrap 4 landing page, free boootstrap 4 templates, Download free bootstrap 4.1 landing page, free boootstrap 4.1.1 templates, Pigga Landing page" class="mb-0">
+                </div>
+                <div class="col-md-9 text-md-right">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End of PreFooter Section -->
+
+    <!-- Page Footer -->
+    <footer class="border border-dark border-left-0 border-right-0 border-bottom-0 p-4 bg-dark">
+        <div id="about" class="container">
+            <div class="row align-items-center text-center text-md-left">
+                <div class="col">
+                    <p class="mb-0 small">&copy; Cloud Computing and Distributed Systems </p>
+                    <p class="mb-0 small">&copy; Diaeddin and Eduardo</p>
+                </div>
+                <div class="d-none d-md-block">
+                    <h6 class="small mb-0">
+                        <a href="javascript:void(0)" class="px-2"><i class="ti-facebook"></i></a>
+                        <a href="javascript:void(0)" class="px-2"><i class="ti-twitter"></i></a>
+                        <a href="javascript:void(0)" class="px-2"><i class="ti-instagram"></i></a>
+                        <a href="javascript:void(0)" class="px-2"><i class="ti-google"></i></a>
+                    </h6>
+                </div>
+            </div>
+        </div>
+        
+    </footer>
+    <!-- End of Page Footer -->
+
+    <!-- core  -->
+    <script src="assets/vendors/jquery/jquery-3.4.1.js"></script>
+    <script src="assets/vendors/bootstrap/bootstrap.bundle.js"></script>
+
+    <!-- bootstrap affix -->
+    <script src="assets/vendors/bootstrap/bootstrap.affix.js"></script>
+
+    <!-- Pigga js -->
+    <script src="assets/js/pigga.js"></script>
+
+</body>
+</html>
