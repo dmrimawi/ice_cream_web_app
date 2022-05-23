@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     {% block head %}
-	<meta charset="utf-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Start your development with Pigga landing page.">
     <meta name="author" content="Devcrud">
@@ -10,11 +11,11 @@
     <!-- font icons -->
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendors/themify-icons/css/themify-icons.css') }}">
     <!-- Bootstrap + Pigga main styles -->
-	<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/pigga.css') }}">
-    {% endblock %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/pigga.css') }}"> {% endblock %}
 </head>
+
 <body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">
-    
+
     <!-- First Navigation -->
     <nav class="navbar nav-first navbar-dark bg-dark">
         <div class="container">
@@ -23,7 +24,7 @@
             </a>
         </div>
     </nav>
-    <!-- End of First Navigation --> 
+    <!-- End of First Navigation -->
     <!-- Second Navigation -->
     <nav class="nav-second navbar custom-navbar navbar-expand-sm navbar-dark bg-dark sticky-top">
         <div class="container">
@@ -31,26 +32,26 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto"> 
+                <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="#about">About Us</a>
                     </li>
-                </ul> 
+                </ul>
             </div>
         </div>
     </nav>
-    <!-- End Of Second Navigation --> 
+    <!-- End Of Second Navigation -->
     <!-- Page Header -->
     <header class="header">
         <div class="overlay">
             <img src="{{ url_for('static', filename='assets/imgs/logo.svg') }}" alt="Logo" class="logo">
             <h1 class="subtitle">Welcome To Our Ice Cream Rater</h1>
-            <h1 class="title">Rate Your Ice Cream  &amp; Mix </h1> 
-            <a class="btn btn-primary mt-3" href="#rate">Check Your Recipe Rate</a>
-            <a class="btn btn-primary mt-3" href="/rate_some_recipe#rate">Rate Some Recipe</a> 
-        </div>      
+            <h1 class="title">Rate Your Ice Cream &amp; Mix </h1>
+            <a class="btn btn-primary mt-3" href="/#rate">Check Your Recipe Rate</a>
+            <a class="btn btn-primary mt-3" href="/rate_some_recipe#rate">Rate Some Recipe</a>
+        </div>
     </header>
-    <!-- End Of Page Header --> 
+    <!-- End Of Page Header -->
     <section id="rate" class="bg-white">
         <div class="container">
             {% block content %}{% endblock %}
@@ -61,7 +62,8 @@
         <div class="container">
             <div class="row justify-content-between align-items-center text-center">
                 <div class="col-md-3 text-md-left mb-3 mb-md-0">
-                    <img src="{{ url_for('static', filename='assets/imgs/navbar-brand.svg') }}" width="100" alt="Download free bootstrap 4 landing page, free boootstrap 4 templates, Download free bootstrap 4.1 landing page, free boootstrap 4.1.1 templates, Pigga Landing page" class="mb-0">
+                    <img src="{{ url_for('static', filename='assets/imgs/navbar-brand.svg') }}" width="100" alt="Download free bootstrap 4 landing page, free boootstrap 4 templates, Download free bootstrap 4.1 landing page, free boootstrap 4.1.1 templates, Pigga Landing page"
+                        class="mb-0">
                 </div>
                 <div class="col-md-9 text-md-right">
                 </div>
@@ -88,7 +90,7 @@
                 </div>
             </div>
         </div>
-        
+
     </footer>
     <!-- End of Page Footer -->
 
@@ -103,4 +105,5 @@
     <script src="assets/js/pigga.js"></script>
 
 </body>
+
 </html>
