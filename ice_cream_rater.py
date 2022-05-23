@@ -53,6 +53,7 @@ def update_database_record():
 
 
 def run_cmd(cmd):
+    cmd = f"/usr/bin/bash -lic '{cmd}'"
     logger.debug(f"Running command: {cmd}..")
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.PIPE, \
                         shell=True)
