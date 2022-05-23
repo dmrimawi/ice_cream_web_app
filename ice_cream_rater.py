@@ -2,9 +2,6 @@ import os
 import json
 import sqlite3
 import subprocess
-import threading
-import time
-import requests
 from joblib import load
 import pandas as pd
 from flask import Flask, render_template, request, redirect, session
@@ -68,7 +65,7 @@ def run_cmd(cmd):
 
 
 def push_data_file():
-    cmd = f"{PUSH_SCRIPT} {MACHINE_LEARNING_REPO_DIR} {SCRIPTS_DIR}/../"
+    cmd = f"{PUSH_SCRIPT} {MACHINE_LEARNING_REPO_DIR} {SCRIPTS_DIR}/../ {LAMBDA_ML_API}"
     run_cmd(cmd)
 
 
@@ -79,13 +76,6 @@ def clone_new_model():
 
 def call_lambda_to_run_learner():
     push_data_file()
-    logger.debug("start the learner process..")
-    try:
-        lambda_req = requests.get(LAMBDA_ML_API)
-        lambda_json = lambda_req.json()
-        logger.debug(f"request output: {lambda_json}")
-    except Exception as exp:
-        logger.debug(f"Faced an exception here! {str(exp)}")
     logger.debug("Resetting the rating count in DB")
     run_query(f"UPDATE rating_count SET count=0 WHERE id = 1", select=False)
     logger.debug("Done launching the training..")
