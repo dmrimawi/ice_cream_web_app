@@ -53,7 +53,7 @@ def update_database_record():
 
 def run_cmd(cmd):
     logger.debug(f"Running command: {cmd}..")
-    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.PIPE, \
+    p = subprocess.Popen(cmd, # stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.PIPE, \
                         shell=True)
     out, err = p.communicate()
     logger.debug(f"Output: {out}")
@@ -62,7 +62,7 @@ def run_cmd(cmd):
 
 
 def push_data_file():
-    cmd = f"{PUSH_SCRIPT} {MACHINE_LEARNING_REPO_DIR}"
+    cmd = f"{PUSH_SCRIPT} {MACHINE_LEARNING_REPO_DIR} {SCRIPTS_DIR}/../"
     run_cmd(cmd)
 
 
