@@ -26,7 +26,7 @@ LAMBDA_ML_API = "https://f2968r0sib.execute-api.us-east-1.amazonaws.com/default/
 FIRST_SELECT_OPTION_VALUE = "--Choose new ingrediant--"
 ACCEPT_RATE_VALUES = [1, 2, 3, 4, 5]
 RATE_VALUES_ERR = f"The values allowed for rate are: {ACCEPT_RATE_VALUES}"
-
+LINUX_PATH = "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
 
 # Helper functions
 def run_query(query, select=True):
@@ -53,14 +53,18 @@ def update_database_record():
 
 
 def run_cmd(cmd):
-    cmd = f"/usr/bin/bash -lic '{cmd}'"
     logger.debug(f"Running command: {cmd}..")
+    old_path = os.environ.get('PATH')
+    logger.debug(f"Current path value: {old_path}")
+    os.environ['PATH'] = f"{LINUX_PATH}:{old_path}"
+    logger.debug(f"New path value: {os.environ['PATH']}")
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.PIPE, \
                         shell=True)
     out, err = p.communicate()
     logger.debug(f"Output: {out}")
     logger.debug(f"Error: {err}")
     logger.debug(f"RC = {p.returncode}")
+    os.environ['PATH'] = old_path
 
 
 def push_data_file():
