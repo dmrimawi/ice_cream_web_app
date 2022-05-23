@@ -67,7 +67,7 @@ def push_data_file():
 
 
 def clone_new_model():
-    cmd = f"{CLONE_SCRIPT} {MACHINE_LEARNING_REPO_DIR}"
+    cmd = f"{CLONE_SCRIPT} {MACHINE_LEARNING_REPO_DIR} {SCRIPTS_DIR}/../"
     run_cmd(cmd)
     
 
