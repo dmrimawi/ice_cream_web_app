@@ -73,9 +73,7 @@ def push_data_file():
 
 
 def clone_new_model():
-    logger.debug("Waiting for until finish training:")
-    time.sleep(240)
-    cmd = f"{CLONE_SCRIPT} {MACHINE_LEARNING_REPO_DIR} {SCRIPTS_DIR}/../"
+    cmd = f"{CLONE_SCRIPT} {MACHINE_LEARNING_REPO_DIR} {SCRIPTS_DIR}/../ &"
     run_cmd(cmd)
     
 
@@ -88,9 +86,8 @@ def call_lambda_to_run_learner():
     logger.debug("Resetting the rating count in DB")
     run_query(f"UPDATE rating_count SET count=0 WHERE id = 1", select=False)
     logger.debug("Done launching the training..")
-    x = threading.Thread(target=clone_new_model)
-    x.start()
     logger.debug("Cloning new updates")
+    clone_new_model()
 
 
 def get_selected_ing_from_post(post_data):
