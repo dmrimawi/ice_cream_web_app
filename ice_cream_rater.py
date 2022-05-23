@@ -67,6 +67,7 @@ def run_cmd(cmd):
 def push_data_file():
     cmd = f"{PUSH_SCRIPT} {MACHINE_LEARNING_REPO_DIR} {SCRIPTS_DIR}/../ {LAMBDA_ML_API}"
     run_cmd(cmd)
+    return redirect('/rate_some_recipe#rate')
 
 
 def clone_new_model():
