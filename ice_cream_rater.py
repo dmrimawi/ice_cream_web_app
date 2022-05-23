@@ -3,6 +3,7 @@ import json
 import sqlite3
 import subprocess
 import threading
+import time
 import requests
 from joblib import load
 import pandas as pd
@@ -53,7 +54,7 @@ def update_database_record():
 
 def run_cmd(cmd):
     logger.debug(f"Running command: {cmd}..")
-    p = subprocess.Popen(cmd, # stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.PIPE, \
+    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.PIPE, \
                         shell=True)
     out, err = p.communicate()
     logger.debug(f"Output: {out}")
@@ -67,6 +68,8 @@ def push_data_file():
 
 
 def clone_new_model():
+    logger.debug("Waiting for until finish training:")
+    time.sleep(240)
     cmd = f"{CLONE_SCRIPT} {MACHINE_LEARNING_REPO_DIR} {SCRIPTS_DIR}/../"
     run_cmd(cmd)
     
