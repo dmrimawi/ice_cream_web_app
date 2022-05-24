@@ -1,8 +1,7 @@
 # On-Demand Learning
 
-This repository contains the web application for the ice cream recipe rating website.
+On-Demand learning is a project that aims to perform a machine learning process when it is needed, and not have dedicated servers that are idle for a long time.
 
-The application is developed using Python3/Flask framework __ice_cream_rater.py__
 
 ## Description
 This code has been deployed on an EC2 machine, on the same directory level, the [machine-learner](https://github.com/dmrimawi/machine-learner) repository should be cloned as well.
