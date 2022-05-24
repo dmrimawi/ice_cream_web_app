@@ -49,5 +49,12 @@ __Wrapping up__: it pushed back the new classification model to the [machine-lea
 For the code and more information, please check the [machine-learner](https://github.com/dmrimawi/machine-learner) repository.
 
 ### Storage
+An accessible place to store the data file and the model is needed to facilitate the way. It can be any cloud storage service like an S3 bucket. 
 
+In this project, we have selected Github as the common storage area and the repository is [machine-learner](https://github.com/dmrimawi/machine-learner) repository.
 
+## About us
+
+This project is a result of the Cloud computing and distributed systems course at Free university of Bozen-Bolzano.
+
+By: __Diaeddin Rimawi__, and __Eduardo Suraci Picchiotti__. Supervised by __Dr. Nabil El Ioini__.
