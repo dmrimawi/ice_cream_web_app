@@ -2,15 +2,12 @@
 
 On-Demand learning is a project that aims to perform a machine learning process when it is needed, and not have dedicated servers that are idle for a long time.
 
+## Problem
+Alot of online systems that has to take decisions based on machine learning models, will often needs to retrain the model whenever a new set of input is given, so the system adapt with the new data.
 
-## Description
-This code has been deployed on an EC2 machine, on the same directory level, the [machine-learner](https://github.com/dmrimawi/machine-learner) repository should be cloned as well.
+The issue is that these models needs high computational servers to run the learning algorithms, which consumes the resources and also has high cost as well.
 
-The website has two main pages:
-
-__Rating recipe__: Using a trained classifier model to classify given recipe ingredients from 1 to 5.
-
-__Adding new rate__: Allow the user to insert new ratings for new recipes or and existed ones.
+In this project we developed a IaC solution, that automatically creates the learning resources only when it is required and then delete these resources after the task is finished. To better optimize the resources and the money.
 
 ## Infrastructure
 
@@ -19,9 +16,13 @@ This project consists of four main components, that work together to perform an 
 ### Webserver 
 It is an EC2 machine with NGINX, that contains the [ice cream web app](https://github.com/dmrimawi/ice_cream_web_app) repository and the [machine-learner](https://github.com/dmrimawi/machine-learner) repository in the server configuration.
 
-During run-time, the web application allows the user first to classify the recipe given through the root (/) route, and insert new rating values for new recipes through the (/rate_some_recipe) route.
+During run-time, the web application allows the user first to classify the recipe given through the root (/) route, and insert new rating values for new recipes through the (/rate_some_recipe) route, and mainly these are two pages in the website:
 
-Rating some recipes will update the CSV data file with the new rates, and when the new records count reaches a specific number (in this project is set to 5 new records) the new CSV file will be pushed back to the [machine-learner](https://github.com/dmrimawi/machine-learner) repository to allow the machine learning server to train the classification model using the new data.
+__Rating recipe__: Using a trained classifier model to classify given recipe ingredients from 1 to 5.
+
+__Adding new rate__: Allow the user to insert new ratings for new recipes or and existed ones.
+
+Rating some new recipes will update the CSV data file with the new rates, and when the new records count reaches a specific number (in this project is set to 5 new records) the new CSV file will be pushed back to the [machine-learner](https://github.com/dmrimawi/machine-learner) repository to allow the machine learning server to train the classification model using the new data.
 
 ### Serverless
 This is the key service used to make the learning happens on-demand only. AWS Lambda function allows idle containers to wait for requests as a backend service and will only work if received a request.
