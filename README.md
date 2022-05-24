@@ -17,7 +17,11 @@ __Adding new rate__: Allow the user to insert new ratings for new recipes or and
 
 This project consists of four main componenets, that work together to perferm an on-demand learning proess using aws services, and terraform. The components are:
 
-__Web server__:
+__Web server__: It is an EC2 machine with NGINX, that contains the [ice cream web app](https://github.com/dmrimawi/ice_cream_web_app) reposiroty and the [machine-learner](https://github.com/dmrimawi/machine-learner) repository in the server configuration.
+
+During run-time, the web application allows the user to first classify the recipe given through the root (/) rout, and inserting new rating values for new recipes though the (/rate_some_recipe) rout.
+
+Rating some recipe, will update the CSV data file with the new rates, and when the new records count reaches a specific number (in this project it set to 5 new records) the new CSV file will be pushed back to the [machine-learner](https://github.com/dmrimawi/machine-learner) repository to allow the machone learning server to train the classification model using the new data.
 
 __Serverless__:
 
