@@ -2,30 +2,28 @@ import os
 import json
 import sqlite3
 import subprocess
-import threading
-import requests
 from joblib import load
 import pandas as pd
 from flask import Flask, render_template, request, redirect, session
+import logger_control as logger
 
 
 app = Flask(__name__)
 app.secret_key = 'keep it secret, keep it safe'
 
 
-APP_NAME = "api"
 SCRIPTS_DIR = os.path.abspath(os.path.join('.', 'scripts'))
 CLONE_SCRIPT = os.path.join(SCRIPTS_DIR, 'clone_new_model.sh')
 PUSH_SCRIPT = os.path.join(SCRIPTS_DIR, 'push_last_updates.sh')
 MACHINE_LEARNING_REPO_DIR = os.path.abspath(os.path.join('..', 'machine-learner'))
-CSV_FILE_PATH = os.path.join(MACHINE_LEARNING_REPO_DIR, 'ice_cream_rater_data.csv')
-MODEL_FILE_PATH = os.path.join(MACHINE_LEARNING_REPO_DIR, 'ice_cream_rater_model.joblib')
-DATABASE_PATH = os.path.abspath(os.path.join(APP_NAME, 'ingredients.db'))
+CSV_FILE_PATH = os.path.join(MACHINE_LEARNING_REPO_DIR, 'data-files', 'ice_cream_rater_data.csv')
+MODEL_FILE_PATH = os.path.join(MACHINE_LEARNING_REPO_DIR, 'output-model', 'ice_cream_rater_model.joblib')
+DATABASE_PATH = os.path.abspath(os.path.join(SCRIPTS_DIR, "..", 'ingredients.db'))
 LAMBDA_ML_API = "https://f2968r0sib.execute-api.us-east-1.amazonaws.com/default/ice_cream_lambda"
 FIRST_SELECT_OPTION_VALUE = "--Choose new ingrediant--"
 ACCEPT_RATE_VALUES = [1, 2, 3, 4, 5]
 RATE_VALUES_ERR = f"The values allowed for rate are: {ACCEPT_RATE_VALUES}"
-
+LINUX_PATH = "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
 
 # Helper functions
 def run_query(query, select=True):
@@ -45,43 +43,44 @@ def run_query(query, select=True):
 
 def update_database_record():
     current_count_value = run_query("SELECT count from rating_count")[0]
-    print(f"Current Vlaues is: {current_count_value}")
+    logger.debug(f"Current Vlaues is: {current_count_value}")
     new_value = int(current_count_value) + 1
     run_query(f"UPDATE rating_count SET count={new_value} WHERE id = 1", select=False)
     return new_value
 
 
 def run_cmd(cmd):
-    print(f"Running command: {cmd}..")
-    p = subprocess.Popen(cmd)
+    logger.debug(f"Running command: {cmd}..")
+    old_path = os.environ.get('PATH')
+    logger.debug(f"Current path value: {old_path}")
+    os.environ['PATH'] = f"{LINUX_PATH}:{old_path}"
+    logger.debug(f"New path value: {os.environ['PATH']}")
+    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.PIPE, \
+                        shell=True)
     out, err = p.communicate()
-    print(f"Output: {out}")
-    print(f"Error: {err}")
-    print(f"RC = {p.returncode}")
+    logger.debug(f"Output: {out}")
+    logger.debug(f"Error: {err}")
+    logger.debug(f"RC = {p.returncode}")
+    os.environ['PATH'] = old_path
 
 
 def push_data_file():
-    cmd = f"{PUSH_SCRIPT} {MACHINE_LEARNING_REPO_DIR}"
+    cmd = f"{PUSH_SCRIPT} {MACHINE_LEARNING_REPO_DIR} {SCRIPTS_DIR}/../ {LAMBDA_ML_API}"
     run_cmd(cmd)
 
 
 def clone_new_model():
-    cmd = f"{CLONE_SCRIPT} {MACHINE_LEARNING_REPO_DIR}"
+    cmd = f"{CLONE_SCRIPT} {MACHINE_LEARNING_REPO_DIR} {SCRIPTS_DIR}/../ &"
     run_cmd(cmd)
     
 
 def call_lambda_to_run_learner():
     push_data_file()
-    print("start the learner process..")
-    lambda_req = requests.get(LAMBDA_ML_API)
-    lambda_json = lambda_req.json()
-    print(f"request output: {lambda_json}")
-    print("Resetting the rating count in DB")
+    logger.debug("Resetting the rating count in DB")
     run_query(f"UPDATE rating_count SET count=0 WHERE id = 1", select=False)
-    print("Done launching the training..")
-    x = threading.Thread(target=clone_new_model)
-    x.start()
-    print("Cloning new updates")
+    logger.debug("Done launching the training..")
+    logger.debug("Cloning new updates")
+    clone_new_model()
 
 
 def get_selected_ing_from_post(post_data):
@@ -119,13 +118,13 @@ def rate_recipe():
             save_df = pd.concat([old_df, ingredient_df])
             save_df.to_csv(CSV_FILE_PATH, index=False)
             count = update_database_record()
-            print(f"The new count is: {count}")
+            logger.debug(f"The new count is: {count}")
             if count >= 5:
                 call_lambda_to_run_learner()
         else:
             session["error_msg"] = True
     except Exception as exp:
-        print(f"-E- {exp}")
+        logger.debug(f"-E- {exp}")
         session["error_msg"] = True
         session["actual_exception"] = str(exp)
     return redirect('/rate_some_recipe#rate')
@@ -168,7 +167,3 @@ def index():
     return render_template("index.html", ingrediant_list=json.dumps(session['ingrediant_list']), \
                             rate=rate, selected_list=selected_list)
 
-
-if __name__=="__main__":
-    from waitress import serve
-    serve(app, host="0.0.0.0", port=8080)
