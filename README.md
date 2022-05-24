@@ -38,6 +38,15 @@ __Destruction__: after the learning is finished, the docker container will make 
 The technology used in the container is depending on Terraform and the code and further information can be found on the [aws-lambda-terraform-docker](https://github.com/dmrimawi/aws-lambda-terraform-docker) repository.
 
 ### Machine learning server
+This server is created by the Terraform container running inside the serverless Lambda function, and during starting up the EC2 receives a shell script as a user-data, that runs the following stages:
+
+__Preperation__: it creates the environment, installs the packages needed, sets up the SSH keys, and clones the [machine-learner](https://github.com/dmrimawi/machine-learner) repository.
+
+__Learning__: It executes the Python script to run the classification learner, and produces a new classification model.
+
+__Wrapping up__: it pushed back the new classification model to the [machine-learner](https://github.com/dmrimawi/machine-learner) repository.
+
+For the code and more information, please check the [machine-learner](https://github.com/dmrimawi/machine-learner) repository.
 
 ### Storage
 
