@@ -25,7 +25,17 @@ During run-time, the web application allows the user first to classify the recip
 Rating some recipes will update the CSV data file with the new rates, and when the new records count reaches a specific number (in this project is set to 5 new records) the new CSV file will be pushed back to the [machine-learner](https://github.com/dmrimawi/machine-learner) repository to allow the machine learning server to train the classification model using the new data.
 
 ### Serverless
-This is the key service used to make the learning happens on-demand only. AWS Lambda function allows to have idle containers to wait for requests as a backend service, and will only work if receives a request.
+This is the key service used to make the learning happens on-demand only. AWS Lambda function allows idle containers to wait for requests as a backend service and will only work if received a request.
+
+A docker container was created to perform the following tasks:
+
+__Creation__: create a new EC2 machine with a security group to allow SSH connection and key pairs.
+
+__Learning__: as part of the EC2 properties it passes a shell script to spin the learning process.
+
+__Destruction__: after the learning is finished, the docker container will make sure to destroy all the resources created.
+
+The technology used in the container is depending on Terraform and the code and further information can be found on the [aws-lambda-terraform-docker](https://github.com/dmrimawi/aws-lambda-terraform-docker) repository.
 
 ### Machine learning server
 
