@@ -1,4 +1,4 @@
-# ice_cream_web_app
+# On-Demand Learning
 
 This repository contains the web application for the ice cream recipe rating website.
 
