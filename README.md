@@ -3,11 +3,11 @@
 On-Demand learning is a project that aims to perform a machine learning process when it is needed, and not have dedicated servers that are idle for a long time.
 
 ## Problem
-Alot of online systems that has to take decisions based on machine learning models, will often needs to retrain the model whenever a new set of input is given, so the system adapt with the new data.
+A lot of online systems that have to make decisions based on machine learning models will often need to retrain the model whenever a new set of input is given, so the system adapts to the new data.
 
-The issue is that these models needs high computational servers to run the learning algorithms, which consumes the resources and also has high cost as well.
+The issue is that these models need high computational servers to run the learning algorithms, which consumes the resources and also has high costs as well.
 
-In this project we developed a IaC solution, that automatically creates the learning resources only when it is required and then delete these resources after the task is finished. To better optimize the resources and the money.
+In this project we developed an IaC solution, that automatically creates the learning resources only when it is required and then deletes these resources after the task is finished. To better optimize the resources and the money.
 
 ## Infrastructure
 
