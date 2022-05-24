@@ -53,6 +53,12 @@ An accessible place to store the data file and the model is needed to facilitate
 
 In this project, we have selected Github as the common storage area and the repository is [machine-learner](https://github.com/dmrimawi/machine-learner) repository.
 
+The following image illustrates these components.
+
+![On Demand Learning Infrastructure Diagram](https://github.com/dmrimawi/ice_cream_web_app/blob/master/CloudComputing.jpg)
+
+
+
 ## About us
 
 This project is a result of the Cloud computing and distributed systems course at Free university of Bozen-Bolzano.
